@@ -6,9 +6,9 @@ def input_data():
     """Ввод данных вручную."""
     return input("Введите текст: ")
 
-def generate_random_data():
-    """Генерация случайных данных."""
-    return ''.join(random.choices(string.ascii_lowercase + ' ', k=50))
+def generate_random_data(length=50):
+    """Генерация случайных данных заданной длины."""
+    return ''.join(random.choices(string.ascii_lowercase + ' ', k=length))
 
 def find_anagrams(text):
     """Находит анаграммы в заданном тексте."""
@@ -49,15 +49,22 @@ def main_menu():
             if option == '1':
                 text = input_data()
             elif option == '2':
-                text = generate_random_data()
-                print(f"Сгенерированный текст: {text}")
+                length = input("Введите длину генерируемого текста (по умолчанию 50): ")
+                try:
+                    length = int(length) if length else 50
+                    text = generate_random_data(length)
+                    print(f"Сгенерированный текст: {text}")
+                except ValueError:
+                    print("Пожалуйста, введите корректное число.")
             else:
                 print("Неверный выбор.")
             results = None  # Сбрасываем результаты при вводе новых данных
         
         elif choice == '2':
-            results = find_anagrams(text)
-            if results is not None:
+            if text is None:
+                print("Сначала введите текст.")
+            else:
+                results = find_anagrams(text)
                 print("Алгоритм выполнен.")
         
         elif choice == '3':
