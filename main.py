@@ -1,22 +1,34 @@
+import random
+import string
+from collections import defaultdict
+
 def input_data():
-    pass
     """Ввод данных вручную."""
-    return "образец ввода"  # Заглушка
+    return input("Введите текст: ")
 
 def generate_random_data():
-    pass
     """Генерация случайных данных."""
-    return "случайные данные"  # Заглушка
+    return ''.join(random.choices(string.ascii_lowercase + ' ', k=50))
 
 def find_anagrams(text):
-    pass
     """Находит анаграммы в заданном тексте."""
-    return {}  # Заглушка
+    words = text.split()
+    anagrams = defaultdict(list)
+
+    for word in words:
+        sorted_word = ''.join(sorted(word))
+        anagrams[sorted_word].append(word)
+
+    return {key: value for key, value in anagrams.items() if len(value) > 1}
 
 def display_results(results):
-    pass
     """Выводит результаты выполнения алгоритма."""
-    print("Результаты будут выведены здесь.")  # Заглушка
+    if results:
+        print("Найденные анаграммы:")
+        for key, value in results.items():
+            print(f"{', '.join(value)}")
+    else:
+        print("Анаграммы не найдены.")
 
 def main_menu():
     """Главное меню приложения."""
